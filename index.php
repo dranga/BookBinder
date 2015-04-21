@@ -55,6 +55,16 @@
             <?php if (isset($error_message)): ?>
                 <div class="alert alert-danger"><?= "<strong>ERROR!</strong> " . $error_message; ?></div>
             <?php endif; ?>
+
+            <?php
+                include('helper.php');
+                if(file_exists("/tmp/bookbinder")){
+                    deleteDir("/tmp/bookbinder");
+                }
+                if(!file_exists("/tmp/bookbinder")){
+                    mkdir("/tmp/bookbinder");
+                }
+            ?>
         </div>
         
         <div>

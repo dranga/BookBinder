@@ -3,13 +3,23 @@
 #add option to add blank page after TOC
 #add option to return LaTeX instead of pdf
 
+include('helper.php');
+
 $attachment_dir = "/tmp/bookbinder";
 $attachment_name = "tempbook";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	if(!file_exists($attachment_dir)) {
-		mkdir($attachment_dir); //causes error if folder exists, so no die() statement
+
+	if(file_exists($attachment_dir)) {
+		deleteDir($attachment_dir);
 	}
+	if(!file_exists($attachment_dir)) {
+		mkdir($attachment_dir);
+	}
+
+	//if(!file_exists($attachment_dir)) {
+	//	mkdir($attachment_dir); //causes error if folder exists, so no die() statement
+	//}
 
 	$attachment_location = $attachment_dir . "/". $attachment_name . ".tex";
 	$attachment_location_pdf = $attachment_dir . "/". $attachment_name . ".pdf";
@@ -205,29 +215,6 @@ function FileFooter($backcover_filename, $makeeven)
 			"\\end{document}\n";
 
 	return $text;
-}
-
-#http://stackoverflow.com/questions/14644353/get-the-number-of-pages-in-a-pdf-document
-function getPDFPages($document)
-{
-
-    // Parse entire output
-    // Surround with double quotes if file name has spaces
-    exec("pdfinfo $document", $output);
-
-    // Iterate through lines
-    $pagecount = 0;
-    foreach($output as $op)
-    {
-        // Extract the number
-        if(preg_match("/Pages:\s*(\d+)/i", $op, $matches) === 1)
-        {
-            $pagecount = intval($matches[1]);
-            break;
-        }
-    }
-
-    return $pagecount;
 }
 
 ?>
