@@ -65,15 +65,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	
 
 	foreach ($_FILES["files"]["error"] as $key => $error) {
-    	if ($error == UPLOAD_ERR_OK and $_POST["sectionnames"][$key] != NULL and 
-    		$_FILES["files"]["name"][$key] != NULL and 
+    	if ($error == UPLOAD_ERR_OK and
     		$_FILES["files"]["type"][$key] == 'application/pdf') {
+
+    		#ignore if either section name or file is NULL
+    		if ($_POST["sectionnames"][$key] == NULL or 
+    			$_FILES["files"]["name"][$key] == NULL) {
+    			continue;
+    		}
 
 			$sectionnames_array[$key] = $_POST["sectionnames"][$key];
 			$sectionfilenames_array[$key] = pathinfo($_FILES["files"]["name"][$key], PATHINFO_FILENAME);
 			move_uploaded_file($_FILES["files"]["tmp_name"][$key], str_replace(" ","-","$attachment_dir/{$_FILES["files"]["name"][$key]}"));
 			
-			if (preg_match('/[^A-Za-z0-9\-]/', $sectionnames_array[$key])) {
+			if (preg_match('/[$&%#_{}~^\\]/', $sectionnames_array[$key])) {
 				$error_message = "Section Name: Disallowed Special Character in '$sectionnames_array[$key]'";
 				require 'index.php';
 				return;

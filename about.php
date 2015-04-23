@@ -59,7 +59,7 @@
                 <p class="lead">
                     <strong>Features include: </strong><br>
                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span> 
-                        Front cover page and choice of blank cover<br>                      
+                        Front cover page and choice of blank back to front cover<br>                      
                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                         Back cover page<br>
                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
