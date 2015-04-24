@@ -73,7 +73,8 @@
                     <br>
                 </p>
                 <p class="lead">
-                    This is acheived by generating and compiling a LaTeX file. The resulting PDF is returned.
+                    This is acheived by generating and compiling a LaTeX file. The resulting PDF is returned.<br>
+                    This project is stored on <a href="https://github.com/dranga/BookBinder">GitHub</a>.
                 </p>
           </div>
         </div>
