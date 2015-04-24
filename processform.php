@@ -17,15 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		mkdir($attachment_dir);
 	}
 
-	//if(!file_exists($attachment_dir)) {
-	//	mkdir($attachment_dir); //causes error if folder exists, so no die() statement
-	//}
-
 	$attachment_location = $attachment_dir . "/". $attachment_name . ".tex";
 	$attachment_location_pdf = $attachment_dir . "/". $attachment_name . ".pdf";
-
-	#$file_handle = fopen($attachment_location, "w+") or die("Error: Unable to open or create file");
-	#move_uploaded_file($_FILES["inputentryname"]["tmp_name"], $target_file
 
 	if($_FILES["cover"]["name"] != NULL and $_FILES["cover"]["type"] == 'application/pdf') {
 		$cover_filename = pathinfo($_FILES["cover"]["name"], PATHINFO_FILENAME);
