@@ -126,6 +126,8 @@
                             </div>
                         </span>
                         <br>
+                        <label><input type="checkbox" name="LaTeX"> Return LaTeX source instead of PDF</label>
+                        <br>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>

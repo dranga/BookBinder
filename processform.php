@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$sectionfilenames_array[$key] = pathinfo($_FILES["files"]["name"][$key], PATHINFO_FILENAME);
 			move_uploaded_file($_FILES["files"]["tmp_name"][$key], str_replace(" ","-","$attachment_dir/{$_FILES["files"]["name"][$key]}"));
 			
-			if (preg_match('/[$&%#_{}~^\\]/', $sectionnames_array[$key])) {
+			if (preg_match("/[$&%#_{}~^\\\]/", $sectionnames_array[$key])) {
 				$error_message = "Section Name: Disallowed Special Character in '$sectionnames_array[$key]'";
 				require 'index.php';
 				return;
@@ -107,12 +107,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		exec('latexmk -pdf -pdflatex="pdflatex -interaction=batchmode" ' . $attachment_location . " 2>&1");
 	}
 	
-	if (file_exists($attachment_location_pdf)) {
+	if (!$_POST["LaTeX"] && file_exists($attachment_location_pdf)) {
 		header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
 		header("Cache-Control: public"); // needed for i.e.
 		header("Content-type:application/pdf");
 		header("Content-Disposition: attachment; filename=$attachment_name.pdf");
 		readfile($attachment_location_pdf);
+	} elseif ($_POST["LaTeX"] && file_exists($attachment_location)) {
+		header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
+		header("Cache-Control: public"); // needed for i.e.
+		header("Content-type:application/x-tex");
+		header("Content-Disposition: attachment; filename=$attachment_name.tex");
+		readfile($attachment_location);
 	} else {
             die("Error: File not found.");
     }
